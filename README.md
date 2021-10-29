@@ -1,1 +1,1 @@
-# service_discovery_sidecar
+# thanos_sd_sidecar
