@@ -40,9 +40,9 @@ help: ## Displays help.
 all: format build
 
 .PHONY: build
-build: check-git deps ## Build thanos_sd_sidecar.
-	@echo ">> building thanos_sd_sidecar"
-	@GOBIN=$(GOBIN) go install github.com/saswatamcode/thanos_sd_sidecar
+build: check-git deps ## Build thanos-sd-sidecar.
+	@echo ">> building thanos-sd-sidecar"
+	@GOBIN=$(GOBIN) go install github.com/saswatamcode/thanos-sd-sidecar
 
 .PHONY: check-comments
 check-comments: ## Checks Go code comments if they have trailing period (excludes protobuffers and vendor files). Comments with more than 3 spaces at beginning are omitted from the check, example: '//    - foo'.
@@ -57,12 +57,12 @@ deps: ## Ensures fresh go.mod and go.sum.
 .PHONY: docs
 docs: build $(MDOX) ## Generates config snippets and doc formatting.
 	@echo ">> generating docs $(PATH)"
-	$(MDOX) fmt -l --links.validate.config-file=$(MDOX_VALIDATE_CONFIG) *.md
+	PATH=${PATH}:$(GOBIN) $(MDOX) fmt -l --links.validate.config-file=$(MDOX_VALIDATE_CONFIG) *.md
 
 .PHONY: check-docs
 check-docs: build $(MDOX) ## Checks docs for discrepancies in formatting and links.
 	@echo ">> checking formatting and links $(PATH)"
-	$(MDOX) fmt --check -l --links.validate.config-file=$(MDOX_VALIDATE_CONFIG) *.md
+	PATH=${PATH}:$(GOBIN) $(MDOX) fmt --check -l --links.validate.config-file=$(MDOX_VALIDATE_CONFIG) *.md
 
 .PHONY: format
 format: ## Formats Go code.
