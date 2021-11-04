@@ -54,6 +54,22 @@ deps: ## Ensures fresh go.mod and go.sum.
 	@go mod tidy
 	@go mod verify
 
+.PHONY: docker
+docker: ## Builds 'thanos-sd-sidecar' docker image.
+docker:
+	@echo ">> building docker image 'thanos-sd-sidecar' with Dockerfile"
+	@docker build -t "thanos-sd-sidecar" .
+
+.PHONY: run-consul-setup ## Runs a simple setup which makes use of thanos-sd-sidecar along with Consul.
+run-consul-setup: docker
+run-consul-setup:
+	@chmod +x example/setup.sh
+	@./example/setup.sh
+
+.PHONY: teardown-consul-setup ## Teardown setup.
+teardown-consul-setup:
+	@docker rm -f $(shell docker ps -a -q)
+
 .PHONY: docs
 docs: build $(MDOX) ## Generates config snippets and doc formatting.
 	@echo ">> generating docs $(PATH)"

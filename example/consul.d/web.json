@@ -1,0 +1,46 @@
+{
+  "services": [
+    {
+      "id": "prom0_eu1",
+      "name": "prometheus0_eu1",
+      "tags": ["eu1"],
+      "address": "host.docker.internal",
+      "port": 9090
+    },
+    {
+      "id": "prom0_us1",
+      "name": "prometheus0_us1",
+      "tags": ["us1", "replica0"],
+      "address": "host.docker.internal",
+      "port": 9091
+    },
+    {
+      "id": "prom1_us1",
+      "name": "prometheus1_us1",
+      "tags": ["us1", "replica1"],
+      "address": "host.docker.internal",
+      "port": 9092
+    },
+    {
+      "id": "thanos_sidecar_eu1",
+      "name": "thanos_sidecar_eu1",
+      "tags": ["eu1"],
+      "address": "host.docker.internal",
+      "port": 19190
+    },
+    {
+      "id": "thanos_sidecar0_us1",
+      "name": "thanos_sidecar0_us1",
+      "tags": ["us1", "replica0"],
+      "address": "host.docker.internal",
+      "port": 19191
+    },
+    {
+      "id": "thanos_sidecar1_us1",
+      "name": "thanos_sidecar1_us1",
+      "tags": ["us1", "replica1"],
+      "address": "host.docker.internal",
+      "port": 19192
+    }
+  ]
+}
