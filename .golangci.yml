@@ -15,6 +15,8 @@ run:
   # from this option's value:
   #     vendor$, third_party$, testdata$, examples$, Godeps$, builtin$
   skip-dirs: vendor
+  skip-files:
+    - "pkg/adapter/adapter.go"
 
 # output configuration options
 output:

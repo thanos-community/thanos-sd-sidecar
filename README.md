@@ -1,6 +1,6 @@
 # Thanos Service Discovery Sidecar
 
-A service discovery sidecar which uses all Prometheus Discovery implementations and generated `file_sd` output compatible with Thanos.
+A service discovery sidecar which uses all Prometheus Discovery implementations and generates `file_sd` output compatible with Thanos.
 
 ```bash mdox-exec="thanos-sd-sidecar --help"
 usage: thanos-sd-sidecar [<flags>] <command> [<args> ...]
@@ -18,7 +18,7 @@ Commands:
   help [<command>...]
     Show help.
 
-  run --output.path=OUTPUT.PATH [<flags>]
+  run [<flags>]
     Launches sidecar for Thanos Service Discovery which generates file_sd output
     (https://prometheus.io/docs/prometheus/latest/configuration/configuration/#file_sd_config)
     according to configuration.

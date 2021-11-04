@@ -17,7 +17,9 @@ import (
 	"github.com/go-kit/log/level"
 	"github.com/oklog/run"
 	"github.com/pkg/errors"
+	"github.com/thanos-community/thanos-sd-sidecar/pkg/adapter"
 	"github.com/thanos-community/thanos-sd-sidecar/pkg/discovery"
+	"github.com/thanos-community/thanos-sd-sidecar/pkg/discovery/consul"
 	"github.com/thanos-community/thanos-sd-sidecar/pkg/extkingpin"
 	"github.com/thanos-community/thanos-sd-sidecar/pkg/version"
 	"gopkg.in/alecthomas/kingpin.v2"
@@ -111,13 +113,27 @@ func interrupt(logger log.Logger, cancel <-chan struct{}) error {
 func registerCommands(_ context.Context, app *extkingpin.App) {
 	cmd := app.Command("run", "Launches sidecar for Thanos Service Discovery which generates file_sd output (https://prometheus.io/docs/prometheus/latest/configuration/configuration/#file_sd_config) according to configuration.")
 	config := extflag.RegisterPathOrContent(cmd, "config", "YAML file for Service Discovery configuration, with spec defined in https://prometheus.io/docs/prometheus/latest/configuration/configuration.", extflag.WithEnvSubstitution(), extflag.WithRequired())
-	outputPath := cmd.Flag("output.path", "The output path for file_sd compatible files.").Required().String()
+	outputPath := cmd.Flag("output.path", "The output path for file_sd compatible files.").Default("targets.json").String()
 	cmd.Run(func(ctx context.Context, logger log.Logger) error {
 		validateConfig, err := config.Content()
 		if err != nil {
 			return err
 		}
 
-		return discovery.Discovery(validateConfig, *outputPath)
+		cfg, err := discovery.ParseConfig(validateConfig)
+		if err != nil {
+			return err
+		}
+
+		// TODO(saswatamcode): Make this generalized for all implementations.
+		disc, err := consul.NewDiscovery(cfg.ConsulSDConfig, logger)
+		if err != nil {
+			return err
+		}
+		sdAdapter := adapter.NewAdapter(ctx, *outputPath, "outputSD", disc, logger)
+		sdAdapter.Run()
+
+		<-ctx.Done()
+		return nil
 	})
 }

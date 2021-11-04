@@ -17,3 +17,10 @@ vendor/
 
 .idea/
 .envrc
+
+#outputs
+targets.json
+targets.yaml
+config.yaml
+tmp/
+data/
