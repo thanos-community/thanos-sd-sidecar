@@ -113,9 +113,11 @@ sleep 3
 
 $DOCKER run -d \
     --add-host=host.docker.internal:host-gateway \
+    -p 8000:8000 \
     -v $(pwd)/example/:/shared \
     --name=thanos-sd-sidecar \
     thanos-sd-sidecar run \
+    --http.sd \
     --config-file=/shared/config.yaml \
     --output.path=/shared/targets.json
 

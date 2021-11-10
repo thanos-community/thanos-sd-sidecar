@@ -6,6 +6,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -114,6 +115,8 @@ func registerCommands(_ context.Context, app *extkingpin.App) {
 	cmd := app.Command("run", "Launches sidecar for Thanos Service Discovery which generates file_sd output (https://prometheus.io/docs/prometheus/latest/configuration/configuration/#file_sd_config) according to configuration.")
 	config := extflag.RegisterPathOrContent(cmd, "config", "YAML file for Service Discovery configuration, with spec defined in https://prometheus.io/docs/prometheus/latest/configuration/configuration.", extflag.WithEnvSubstitution(), extflag.WithRequired())
 	outputPath := cmd.Flag("output.path", "The output path for file_sd compatible files.").Default("targets.json").String()
+	httpSD := cmd.Flag("http.sd", "Enable service discovery endpoint (/targets) which serves SD targets compatible with https://prometheus.io/docs/prometheus/latest/http_sd.").Default("false").Bool()
+
 	cmd.Run(func(ctx context.Context, logger log.Logger) error {
 		validateConfig, err := config.Content()
 		if err != nil {
@@ -131,6 +134,14 @@ func registerCommands(_ context.Context, app *extkingpin.App) {
 			return err
 		}
 		sdAdapter := adapter.NewAdapter(ctx, *outputPath, "outputSD", disc, logger)
+
+		if *httpSD {
+			go func() {
+				http.HandleFunc("/targets", sdAdapter.ServeHTTP)
+				level.Error(logger).Log(http.ListenAndServe(":8000", nil))
+			}()
+		}
+
 		sdAdapter.Run()
 
 		<-ctx.Done()

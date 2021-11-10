@@ -18,12 +18,12 @@
 
 package adapter
 
-// NOTE: you do not need to edit this file when implementing a custom sd.
 import (
 	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -142,6 +142,18 @@ func (a *Adapter) writeOutput() error {
 		return err
 	}
 	return nil
+}
+
+// ServeHTTP returns the JSON formatted target groups.
+func (a *Adapter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	customSD := mapToArray(a.groups)
+	level.Info(a.logger).Log("msg", "HTTP SD endpoint hit")
+	w.Header().Set("Content-Type", "application/json")
+
+	if err := json.NewEncoder(w).Encode(customSD); err != nil {
+		level.Error(a.logger).Log("msg", "error encoding JSON", "err", err)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 }
 
 func (a *Adapter) runCustomSD(ctx context.Context) {
