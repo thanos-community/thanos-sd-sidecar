@@ -17,3 +17,9 @@ vendor/
 
 .idea/
 .envrc
+
+#outputs
+targets.json
+targets.yaml
+tmp/
+data/

@@ -1,0 +1,106 @@
+{
+  "services": [
+    {
+      "id": "prom0_eu1",
+      "name": "prometheus0_eu1",
+      "tags": ["eu1"],
+      "address": "host.docker.internal",
+      "port": 9090,
+      "checks": [
+        {
+          "id": "prom0_eu1_check",
+          "name": "prometheus0_eu1_check",
+          "http": "http://host.docker.internal:9090/metrics",
+          "method": "GET",
+          "interval": "10s",
+          "timeout": "1s"
+        }
+      ]
+    },
+    {
+      "id": "prom0_us1",
+      "name": "prometheus0_us1",
+      "tags": ["us1", "replica0"],
+      "address": "host.docker.internal",
+      "port": 9091,
+      "checks": [
+        {
+          "id": "prom0_us1_check",
+          "name": "prometheus0_us1_check",
+          "http": "http://host.docker.internal:9091/metrics",
+          "method": "GET",
+          "interval": "10s",
+          "timeout": "1s"
+        }
+      ]
+    },
+    {
+      "id": "prom1_us1",
+      "name": "prometheus1_us1",
+      "tags": ["us1", "replica1"],
+      "address": "host.docker.internal",
+      "port": 9092,
+      "checks": [
+        {
+          "id": "prom1_us1_check",
+          "name": "prometheus1_us1_check",
+          "http": "http://host.docker.internal:9092/metrics",
+          "method": "GET",
+          "interval": "10s",
+          "timeout": "1s"
+        }
+      ]
+    },
+    {
+      "id": "thanos_sidecar_eu1",
+      "name": "thanos_sidecar_eu1",
+      "tags": ["eu1"],
+      "address": "host.docker.internal",
+      "port": 19190,
+      "checks": [
+        {
+          "id": "thanos_sidecar_eu1_check",
+          "name": "thanos_sidecar_eu1_check",
+          "grpc": "host.docker.internal:19190",
+          "grpc_use_tls": false,
+          "interval": "10s",
+          "timeout": "1s"
+        }
+      ]
+    },
+    {
+      "id": "thanos_sidecar0_us1",
+      "name": "thanos_sidecar0_us1",
+      "tags": ["us1", "replica0"],
+      "address": "host.docker.internal",
+      "port": 19191,
+      "checks": [
+        {
+          "id": "thanos_sidecar0_us1_check",
+          "name": "thanos_sidecar0_us1_check",
+          "grpc": "host.docker.internal:19191",
+          "grpc_use_tls": false,
+          "interval": "10s",
+          "timeout": "1s"
+        }
+      ]
+    },
+    {
+      "id": "thanos_sidecar1_us1",
+      "name": "thanos_sidecar1_us1",
+      "tags": ["us1", "replica1"],
+      "address": "host.docker.internal",
+      "port": 19192,
+      "checks": [
+        {
+          "id": "thanos_sidecar1_us1_check",
+          "name": "thanos_sidecar1_us1_check",
+          "grpc": "host.docker.internal:19192",
+          "grpc_use_tls": false,
+          "interval": "10s",
+          "timeout": "1s"
+        }
+      ]
+    }
+  ]
+}

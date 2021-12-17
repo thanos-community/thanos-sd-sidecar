@@ -1,0 +1,5 @@
+# Sample config for consul.
+consul_sd_config:
+  server: "host.docker.internal:8500"
+  tag_separator: ","
+  refresh_interval: 10
