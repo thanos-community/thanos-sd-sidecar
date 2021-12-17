@@ -1,4 +1,4 @@
-module github.com/saswatamcode/thanos-sd-sidecar
+module github.com/thanos-community/thanos-sd-sidecar
 
 go 1.16
 

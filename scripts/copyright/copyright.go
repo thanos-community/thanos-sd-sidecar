@@ -1,4 +1,4 @@
-// Copyright (c) Saswata Mukherjee @saswatamcode
+// Copyright (c) Thanos Contributors
 // Licensed under the Apache License 2.0.
 
 package main
@@ -14,7 +14,7 @@ import (
 
 var (
 	// license compatible for Go and Proto files.
-	license = []byte(`// Copyright (c) Saswata Mukherjee @saswatamcode
+	license = []byte(`// Copyright (c) Thanos Contributors
 // Licensed under the Apache License 2.0.
 
 `)
