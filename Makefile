@@ -42,7 +42,7 @@ all: format build
 .PHONY: build
 build: check-git deps ## Build thanos-sd-sidecar.
 	@echo ">> building thanos-sd-sidecar"
-	@GOBIN=$(GOBIN) go install github.com/saswatamcode/thanos-sd-sidecar
+	@GOBIN=$(GOBIN) go install github.com/thanos-community/thanos-sd-sidecar
 
 .PHONY: check-comments
 check-comments: ## Checks Go code comments if they have trailing period (excludes protobuffers and vendor files). Comments with more than 3 spaces at beginning are omitted from the check, example: '//    - foo'.

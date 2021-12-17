@@ -1,4 +1,4 @@
-// Copyright (c) Saswata Mukherjee @saswatamcode
+// Copyright (c) Thanos Contributors
 // Licensed under the Apache License 2.0.
 
 package discovery

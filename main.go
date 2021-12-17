@@ -1,4 +1,4 @@
-// Copyright (c) Saswata Mukherjee @saswatamcode
+// Copyright (c) Thanos Contributors
 // Licensed under the Apache License 2.0.
 
 package main
@@ -17,9 +17,9 @@ import (
 	"github.com/go-kit/log/level"
 	"github.com/oklog/run"
 	"github.com/pkg/errors"
-	"github.com/saswatamcode/thanos-sd-sidecar/pkg/discovery"
-	"github.com/saswatamcode/thanos-sd-sidecar/pkg/extkingpin"
-	"github.com/saswatamcode/thanos-sd-sidecar/pkg/version"
+	"github.com/thanos-community/thanos-sd-sidecar/pkg/discovery"
+	"github.com/thanos-community/thanos-sd-sidecar/pkg/extkingpin"
+	"github.com/thanos-community/thanos-sd-sidecar/pkg/version"
 	"gopkg.in/alecthomas/kingpin.v2"
 )
 
